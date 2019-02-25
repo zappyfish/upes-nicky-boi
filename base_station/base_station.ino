@@ -13,7 +13,7 @@ PacketManager packetManager;
 
 // 1. Test Receive Callback
 void testReceiveCallback(Packet *packet) {
-  Serial.print("received");
+  packet->getParam("x");
 }
 
 ReceiveFunction testReceiveFunction(TEST_PACKET_NAME, &testReceiveCallback);
@@ -30,4 +30,9 @@ void loop() {
   // See if we got anything new
   packetManager.checkForPackets();
   // Sleep here
+
+  // Send a packet!
+  Packet p(TEST_PACKET_NAME);
+  p.setParam("x", "5");
+  packetManager.sendPacket(&p);
 }
